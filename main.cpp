@@ -5,11 +5,11 @@
 using namespace std;
 
 struct node {
-    int value;
-    int l_bord = INT_MIN;
-    int r_bord = INT_MAX;
-    node (int value) : value(value) {};
-    node(int value, int l_bord, int r_bord) : value(value), l_bord(l_bord), r_bord(r_bord) {};
+    long long value;
+    long long l_bord = LONG_LONG_MIN;
+    long long r_bord = LONG_LONG_MAX;
+    node (long long value) : value(value) {};
+    node(long long value, long long l_bord, long long r_bord) : value(value), l_bord(l_bord), r_bord(r_bord) {};
 };
 
 
@@ -18,17 +18,17 @@ int main() {
     ifstream in("bst.in");
     in >> num_of_nodes;
     vector <node*> data (num_of_nodes);
-    int input;
+    long long input;
     in >> input;
     data[0] = new node(input);
     for (int i = 1; i < num_of_nodes; i++) {
-        int value;
+        long long value;
         int row;
         char d;
         in >> value >> row >> d;
         if (d == 'R') {
-            if (value >= data[row]->value && value < data[row]->r_bord) {
-                data[i] = new node(value, data[row]->value, data[row]->r_bord);
+            if (value >= data[row-1]->value && value < data[row-1]->r_bord) {
+                data[i] = new node(value, data[row-1]->value, data[row-1]->r_bord);
             }
             else {
                 in.close();
@@ -39,8 +39,8 @@ int main() {
             }
         }
         else {
-            if (value >= data[row]->l_bord && value < data[row]->value) {
-                data[i] = new node(value, data[row]->value, data[row]->r_bord);
+            if (value >= data[row-1]->l_bord && value < data[row-1]->value) {
+                data[i] = new node(value, data[row-1]->l_bord, data[row-1]->value);
             }
             else {
                 in.close();
@@ -56,5 +56,5 @@ int main() {
     out << "YES";
     out.close();
     return 0;
-    
+
 }
